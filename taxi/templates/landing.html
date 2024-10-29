@@ -1,0 +1,253 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="{% static 'CUSTOMER-TAXI/img/fav.png' %}">
+    <meta charset="UTF-8">
+    <title>Taxi Fare Meter</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'CUSTOMER-TAXI/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'CUSTOMER-TAXI/css/font-awesome.min.css' %}">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #1a1a1a; /* Dark background */
+            color: #f2f2f2; /* Light text */
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #000; /* Black header */
+            padding: 20px 0;
+        }
+        header .main-menu {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+        }
+        header img {
+            height: 50px; /* Adjust logo size */
+        }
+        .nav-menu a {
+            color: #ffcc00; /* Yellow links */
+            margin: 0 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .nav-menu a:hover {
+            color: #fff; /* White on hover */
+        }
+        .login-btn {
+            background-color: #ffcc00; /* Yellow button */
+            color: #000; /* Black text */
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            text-decoration: none;
+        }
+        .login-btn:hover {
+            background-color: #e6b800; /* Darker yellow on hover */
+            transform: translateY(-3px);
+        }
+        .section-gap {
+            padding: 60px 0;
+        }
+        .home-about-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+            background: #333; /* Darker area for contrast */
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .home-about-area h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #ffcc00; /* Yellow */
+        }
+        .home-about-area p {
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        .primary-btn {
+            background-color: #ffcc00; /* Yellow button */
+            color: #000; /* Black text */
+            padding: 10px 25px;
+            border-radius: 25px;
+            transition: background-color 0.3s, transform 0.3s;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .primary-btn:hover {
+            background-color: #e6b800; /* Darker yellow on hover */
+            transform: translateY(-3px);
+        }
+        .services-area {
+            background: #444; /* Dark background for services */
+            padding: 40px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        .services-area h1 {
+            margin-bottom: 30px;
+            font-size: 2em;
+            color: #ffcc00; /* Yellow */
+        }
+        .single-service {
+            margin: 20px 0;
+            padding: 30px;
+            border-radius: 10px;
+            background: #555; /* Service card background */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s;
+        }
+        .single-service:hover {
+            transform: translateY(-5px);
+        }
+        .reviews-area {
+            padding: 40px 0;
+            background: #333; /* Dark background for reviews */
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .reviews-area h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2em;
+            color: #ffcc00; /* Yellow */
+        }
+        .single-review {
+            padding: 20px;
+            border: 1px solid #666; /* Light border */
+            border-radius: 10px;
+            margin: 10px 0;
+            text-align: left;
+            background: #444; /* Darker review background */
+            transition: transform 0.3s;
+        }
+        .single-review:hover {
+            transform: translateY(-3px);
+        }
+        .star {
+            color: #ffcc00; /* Yellow stars */
+        }
+        .footer-area {
+            background: #000; /* Black footer */
+            color: #fff;
+            padding: 40px 0;
+            text-align: center;
+        }
+        .footer-area h6 {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+        .footer-area .footer-social a {
+            margin: 0 10px;
+            color: #ffcc00; /* Yellow icons */
+            font-size: 1.5em;
+            transition: color 0.3s;
+        }
+        .footer-area .footer-social a:hover {
+            color: #fff; /* White on hover */
+        }
+        .footer-text {
+            margin-top: 30px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="container main-menu">
+            <div class="row align-items-center justify-content-between">
+                <button class="login-btn" onclick="window.location.href='/login'">Login</button>
+                <h1 style="color: #ffcc00;">Taxi Fare Meter</h1>
+            </div>
+        </div>
+    </header>
+
+    <div id="about">
+        <section class="home-about-area section-gap">
+            <div class="container">
+                <h1>Globally Connected by Large Network</h1>
+                <h4>We are here to listen from you to deliver excellence</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <a class="primary-btn" href="/login">Get Details</a>
+            </div>
+        </section>
+    </div>
+
+    <section class="services-area section-gap">
+        <div class="container">
+            <h1>What Services We Offer to Our Clients</h1>
+            <div class="row">
+                <div class="col-lg-4 single-service">
+                    <h4>Taxi Service</h4>
+                    <p>Usage of the Internet is becoming more common due to rapid advancement of technology and power.</p>
+                </div>
+                <div class="col-lg-4 single-service">
+                    <h4>Office Pick-ups</h4>
+                    <p>Usage of the Internet is becoming more common due to rapid advancement of technology and power.</p>
+                </div>
+                <div class="col-lg-4 single-service">
+                    <h4>Event Transportation</h4>
+                    <p>Usage of the Internet is becoming more common due to rapid advancement of technology and power.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="reviews-area section-gap">
+        <div class="container">
+            <h1>Client’s Reviews</h1>
+            <div class="row">
+                {% for i in ratings|slice:":6" %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-review">
+                        <h4>Name: {{ i.TRIP.DRIVER.name|capfirst }}</h4>
+                        <p>Review: {{ i.review }}</p>
+                        <div class="star">
+                            {% for star in "12345" %}
+                            {% if forloop.counter <= i.rating %}
+                            <span class="fa fa-star checked"></span>
+                            {% else %}
+                            <span class="fa fa-star"></span>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="footer-area">
+        <div class="container">
+            <h6>Follow Us</h6>
+            <div class="footer-social">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-dribbble"></i></a>
+                <a href="#"><i class="fa fa-behance"></i></a>
+            </div>
+            <p class="footer-text">
+                &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved.
+            </p>
+        </div>
+    </section>
+
+    <script src="{% static 'CUSTOMER-TAXI/js/vendor/jquery-2.2.4.min.js' %}"></script>
+    <script src="{% static 'CUSTOMER-TAXI/js/vendor/bootstrap.min.js' %}"></script>
+    <script src="{% static 'CUSTOMER-TAXI/js/main.js' %}"></script>
+</body>
+</html>

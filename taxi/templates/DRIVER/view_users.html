@@ -1,0 +1,102 @@
+{% extends 'DRIVER/base.html' %}
+{% block body %}
+
+<head>
+    <style>
+        body {
+            background-image: url('/static/DRIVER/assets/img/bg-smart-home-2.jpg'); /* Background image */
+            background-size: cover; /* Ensures the image covers the entire background */
+            background-position: center; /* Centers the image */
+            min-height: 100vh; /* Ensures the body takes at least the full viewport height */
+            position: relative; /* Positions the pseudo-element for the mask */
+            color: #000; /* Default text color for better readability */
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dark overlay with transparency */
+            z-index: 1; /* Ensures the overlay is above the background image */
+        }
+
+        .content {
+            position: relative; /* For positioning the content above the overlay */
+            z-index: 2; /* Ensures the content is above the overlay */
+            padding: 20px;
+            color: #000; /* Change text color to black */
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.8); /* White card with transparency */
+            border-radius: 8px; /* Rounded corners for the card */
+            padding: 15px; /* Padding inside the card */
+            margin: 10px; /* Margin around the card */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect for the card */
+        }
+
+        .card-title {
+            color: #000; /* Black color for card titles */
+        }
+
+        .card-description {
+            color: #000; /* Black color for card descriptions */
+        }
+
+        .card-button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 15px;
+            color: #fff; /* Button text color */
+            background-color: #007bff; /* Button background color */
+            border: none; /* Remove default border */
+            border-radius: 5px; /* Rounded corners */
+            text-decoration: none; /* Remove underline */
+        }
+
+        .card-button:hover {
+            background-color: #0056b3; /* Darker shade on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlay"></div> <!-- Overlay for darkening effect -->
+    <div class="content"> <!-- Main content container -->
+        <form method="post" action="/searchuser">
+            <table class="table table-hover">
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="text" name="s" placeholder="Search By Name" class="form-control" value="{{ s }}">
+                    </td>
+                    <td>
+                        <input type="submit" value="Search" class="btn btn-primary">
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <br/>
+
+        <div class="row">
+            {% for i in data %}
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-content">
+                        <h2 class="card-title">{{ i.name }}</h2>
+                        <br/>
+                        <p class="card-description">{{ i.phone }}</p>
+                        <p class="card-description">{{ i.email }}</p>
+                        <p class="card-description">{{ i.place }}, {{ i.post }}, {{ i.pin }}.</p>
+                        <a href="/start_ride/{{ i.id }}" class="card-button">Start</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+{% endblock %}

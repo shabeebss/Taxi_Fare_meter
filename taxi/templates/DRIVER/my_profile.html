@@ -1,0 +1,133 @@
+{% extends 'DRIVER/base.html' %}
+{% block body %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .profile-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .profile-info div {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .qr-code {
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Driver Profile</h1>
+    <div class="profile-info">
+        <!-- Driver Details -->
+        <div>
+            <h2>Personal Details</h2>
+            <p><strong>Name:</strong> {{ driver.name }}</p>
+            <p><strong>Vehicle Number:</strong> {{ driver.vehnum }}</p>
+            <p><strong>Email:</strong> {{ driver.email }}</p>
+            <p><strong>Phone:</strong> {{ driver.phone }}</p>
+            <p><strong>Vehicle Type:</strong> {{ driver.VTYPE.type }}</p>
+        </div>
+
+        <!-- Uploaded Documents -->
+        <div>
+            <h2>Documents</h2>
+            <p><strong>License Photo:</strong></p>
+            <a href="{{ driver.licencep.url }}"><img src="{{ driver.licencep.url }}" height="70px" width="70px" alt="License Photo"></a>
+            <p><strong>Registration Certificate:</strong></p>
+            <a href="{{ driver.registrationp.url }}"><img src="{{ driver.registrationp.url }}" height="70px" width="70px" alt="License Photo"></a>
+            <p><strong>Insurance:</strong></p>
+            <a href="{{ driver.insurancep.url }}"><img src="{{ driver.insurancep.url }}" height="70px" width="70px" alt="License Photo"></a>
+            <p><strong>Vehicle Photo:</strong></p>
+            <a href="{{ driver.vehiclep.url }}"><img src="{{ driver.vehiclep.url }}" height="70px" width="70px" alt="License Photo"></a>
+        </div>
+    </div>
+
+    <!-- QR Code -->
+    <div class="qr-code">
+        <h2>QR Code</h2>
+            <a href="{{ driver.qr.url }}"><img src="{{ driver.qr.url }}" height="70px" width="70px" alt="License Photo"></a>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+{#        <a href="/edit_profile/{{ driver.id }}" class="btn">Edit Profile</a>#}
+        <a href="/change_password" class="btn">Change Password</a>
+    </div>
+</div>
+
+</body>
+{% endblock %}
+

@@ -1,0 +1,108 @@
+{% extends 'DRIVER/base.html' %}
+{% block body %}
+
+<head>
+    <style>
+        body {
+{#            background-image: url('/static/DRIVER/assets/img/ivancik.jpg'); /* Replace with your image path */#}
+            background-size: cover; /* Ensures the image covers the entire background */
+            background-position: center; /* Centers the image */
+            min-height: 100vh; /* Ensures the body takes at least the full viewport height */
+            position: relative; /* Positions the pseudo-element for the mask */
+{#            color: #000; /* Text color for better readability */#}
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dark overlay with transparency */
+            z-index: 1; /* Ensures the overlay is above the background image */
+        }
+
+        .content {
+            position: relative; /* For positioning the content above the overlay */
+            z-index: 2; /* Ensures the content is above the overlay */
+            padding: 20px;
+        }
+
+        table {
+            background: rgba(255, 255, 255, 0.8); /* White table background with transparency */
+            border-radius: 8px; /* Rounded corners for the table */
+            margin-top: 20px; /* Space above the table */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect for the table */
+        }
+
+        th {
+            background-color: #007bff; /* Header background color */
+            color: white; /* Header text color */
+        }
+
+        a {
+            color: #007bff; /* Link color */
+            text-decoration: none; /* Remove underline from links */
+        }
+
+        a:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+    </style>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="overlay"></div> <!-- Overlay for darkening effect -->
+    <div class="content"> <!-- Main content container -->
+        <form id="form1" name="form1" method="post" action="">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Si.No</th>
+                        <th>Bill No</th>
+                        <th>Starting Point</th>
+                        <th>Ending Point</th>
+                        <th>Distance (km)</th>
+                        <th>Price/Km</th>
+                        <th>Total</th>
+                        <th>Generate Bill</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in data %}
+                    <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.id }}</td>
+                        <td><a href="http://maps.google.com?q={{ i.start }}">{{ i.splace }}</a></td>
+                        <td>
+                            {% if i.end == 'pending' %}
+                                <a href="/add2/{{ i.id }}">Add Ending Point</a>
+                            {% else %}
+                                <a href="http://maps.google.com?q={{ i.end }}">{{ i.eplace }}</a>
+                            {% endif %}
+                        </td>
+                        <td>{{ i.distance|floatformat:2 }}</td>
+                        <td> ₹ {{ i.DRIVER.VTYPE.price }}</td>
+                        <td> ₹ {{ i.price }}</td>
+                        <td>
+                            {% if i.bill %}
+                                <a href="{{ i.bill.url }}" ><img src="{{ i.bill.url }}" width="100" height="100"></a>
+                            {% else %}
+                                {% if i.end != 'pending' and i.start != 'pending' %}
+                                    <a href="/generate_bill/{{ i.id }}">Generate Bill</a>
+                                {% else %}
+                                    <span>N/A</span>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+    </div>
+</body>
+
+{% endblock %}

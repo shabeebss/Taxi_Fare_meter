@@ -1,0 +1,115 @@
+{% extends 'ADMIN/base.html' %}
+
+{% block body %}
+
+<div class="container">
+    <div class="header">
+        <a href="/Add_vtype" class="btn btn-primary">Add New Type</a>
+    </div>
+
+    <div class="table-container mt-4">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th style="color: black">Si.No</th>
+                    <th style="color: black">Type</th>
+                    <th style="color: black">Number of Seats</th>
+                    <th style="color: black">Price</th>
+                    <th style="color: black">Edit</th>
+                    <th style="color: black">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in vtype %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.type }}</td>
+                    <td>{{ i.seats }}</td>
+                    <td>₹ {{ i.price }}</td>
+                    <td><a href="/Edit_vtype/{{ i.id }}" class="btn btn-sm btn-warning">Edit</a></td>
+                    <td><a href="/vtype_delete/{{ i.id }}" class="btn btn-sm btn-danger">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Add background image and styling -->
+<style>
+    body {
+        background: url('/static/ADMIN-Taxi/static/img/photos/unsplash-2.jpg') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    .container {
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.9); /* Mask over the background */
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        padding: 10px 15px;
+        font-size: 16px;
+        text-decoration: none;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .table-container {
+        background-color: rgba(0, 0, 0, 0.1); /* Light transparent background for the table */
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    table {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    th, td {
+        text-align: center;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    th {
+        background-color: #007bff;
+        color: white;
+    }
+
+    td {
+        background-color: #f9f9f9;
+    }
+
+    .btn-warning {
+        background-color: #ffc107;
+        color: white;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .btn-warning:hover {
+        background-color: #e0a800;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+</style>
+{% endblock %}

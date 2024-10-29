@@ -1,0 +1,86 @@
+{% extends 'CUSTOMER/base.html' %}
+{% block body %}
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Add the background image and mask */
+        body {
+            background-image: url('/static/CUSTOMER-TAXI/img/b1.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Create a mask with opacity */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
+            z-index: 1; /* Make sure it's behind the container */
+        }
+
+        /* Ensure content stays above the mask */
+        .container {
+            position: relative;
+            z-index: 2; /* Make sure the container is above the mask */
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+
+<body class="flex items-center justify-center">
+    <div class="container mx-auto bg-white rounded-lg shadow-lg p-6 fade-in" style="width: 30%">
+        <h1 class="text-2xl font-semibold text-center text-gray-800">Customer Profile</h1>
+        <div class="mt-6">
+            <div class="mb-4">
+                <span class="font-bold text-gray-700">Name:</span>
+                <span class="text-gray-600">{{ customer.name }}</span>
+            </div>
+            <div class="mb-4">
+                <span class="font-bold text-gray-700">Phone:</span>
+                <span class="text-gray-600">{{ customer.phone }}</span>
+            </div>
+            <div class="mb-4">
+                <span class="font-bold text-gray-700">Email:</span>
+                <span class="text-gray-600">{{ customer.email }}</span>
+            </div>
+            <div class="mb-4">
+                <span class="font-bold text-gray-700">Place:</span>
+                <span class="text-gray-600">{{ customer.place }}</span>
+            </div>
+            <div class="mb-4">
+                <span class="font-bold text-gray-700">Post:</span>
+                <span class="text-gray-600">{{ customer.post }}</span>
+            </div>
+            <div class="mb-4">
+                <span class="font-bold text-gray-700">PIN:</span>
+                <span class="text-gray-600">{{ customer.pin }}</span>
+            </div>
+        </div>
+
+        <div class="text-center space-x-4">
+
+            <a href="/customer_edit_profile/{{ customer.id }}" class="inline-block bg-green-600 text-white rounded-lg px-4 py-2 transition duration-200 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+                Edit Profile
+            </a>
+        </div>
+    </div>
+</body>
+
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'ADMIN/base.html' %}
+{% block body %}
+<body style="background-color: #f0f4f8; font-family: 'Arial', sans-serif;">
+  <form id="form1" name="form1" method="post" action="">
+    <table border="1" cellpadding="10" cellspacing="0" style="margin: 20px auto; width: 90%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background-color: #fff;">
+      <thead>
+        <tr style="background-color: #004466; color: white;">
+          <th>Si.No</th>
+          <th>Customer</th>
+          <th>Driver</th>
+          <th>Rating</th>
+          <th>Review</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in data %}
+        <tr style="background-color: {% if forloop.counter0|divisibleby:2 %} #e9f5fb {% else %} #ffffff {% endif %};">
+          <td>{{ forloop.counter }}</td>
+          <td>{{ i.TRIP.CUSTOMER.name }}</td>
+          <td>{{ i.TRIP.DRIVER.name }}</td>
+          <td>
+            <span class="star-rating">
+              {% for star in "12345" %}
+                  {% if star|add:"0" <= i.rating %}
+                        <span class="filled-star">&#9733;</span>  <!-- Filled star HTML entity -->
+                  {% else %}
+                        <span class="empty-star">&#9734;</span>   <!-- Empty star HTML entity -->
+                  {% endif %}
+              {% endfor %}
+            </span>
+          </td>
+          <td>{{ i.review }}</td>
+          <td>{{ i.date }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </form>
+
+  <style>
+    .star-rating {
+      font-size: 24px;
+    }
+    .filled-star {
+      color: gold;
+    }
+    .empty-star {
+      color: lightgray;
+    }
+    table {
+      border-collapse: collapse;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 15px;
+      text-align: center;
+      font-size: 16px;
+    }
+    th {
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    tbody tr:hover {
+      background-color: #d1ecf1;
+      transition: background-color 0.3s ease;
+    }
+    td {
+      color: #333;
+    }
+    th {
+      background-color: #004466;
+      color: white;
+    }
+    table {
+      width: 100%;
+      margin-top: 30px;
+    }
+    body {
+      background-color: #f0f4f8;
+      font-family: 'Arial', sans-serif;
+      color: #333;
+    }
+  </style>
+</body>
+{% endblock %}

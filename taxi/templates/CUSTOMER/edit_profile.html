@@ -1,0 +1,92 @@
+{% extends 'CUSTOMER/base.html' %}
+{% block body %}
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<style>
+    /* Add the background image and mask */
+    body {
+        background-image: url('/static/CUSTOMER-TAXI/img/g4.jpg'); /* Replace with your image URL */
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        min-height: 100vh; /* Ensure the body covers the full height */
+    }
+
+    /* Create a mask with opacity */
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
+        z-index: 1; /* Ensure the mask is below the content */
+    }
+
+    /* Ensure content stays above the mask */
+    .container {
+        position: relative;
+        z-index: 2; /* Ensure the container is above the mask */
+    }
+
+    .fade-in {
+        animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+</style>
+
+<body class="flex items-center justify-center">
+    <div class="container mx-auto bg-white rounded-lg shadow-lg p-6 fade-in" style="width: 30%">
+        <h1 style="margin-top: 100px;" class="text-2xl font-semibold text-center text-gray-800">Edit Profile</h1>
+        <form method="POST" action="" class="mt-6">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="name" class="block text-gray-700">Name</label>
+                <input type="text" id="name" name="name" value="{{ customer.name }}" pattern="[A-Za-z\s]+" title="Only letters and spaces are allowed"  class="mt-1 block w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div class="mb-4">
+                <label for="phone" class="block text-gray-700">Phone</label>
+                <input type="text" id="phone" name="phone" value="{{ customer.phone }}" pattern="\d{10}" title="Please enter valid phone number"  class="mt-1 block w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700">Email</label>
+                <input type="email" id="email" name="email" value="{{ customer.email }}"  class="mt-1 block w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div class="mb-4">
+                <label for="place" class="block text-gray-700">Place</label>
+                <input type="text" id="place" name="place" value="{{ customer.place }}"  class="mt-1 block w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div class="mb-4">
+                <label for="post" class="block text-gray-700">Post</label>
+                <input type="text" id="post" name="post" value="{{ customer.post }}"  class="mt-1 block w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div class="mb-4">
+                <label for="pin" class="block text-gray-700">PIN</label>
+                <input type="text" id="pin" name="pin" value="{{ customer.pin }}" pattern="\d{6}" title="Please enter exactly 6 digits" class="mt-1 block w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="bg-blue-600 text-white rounded-lg px-4 py-2 transition duration-200 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                    Update Profile
+                </button>
+                <a href="javascript:history.back()" class="inline-block bg-gray-300 text-gray-700 rounded-lg px-4 py-2 ml-2 transition duration-200 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</body>
+{% endblock %}

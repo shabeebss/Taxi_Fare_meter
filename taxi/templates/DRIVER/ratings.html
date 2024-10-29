@@ -1,0 +1,57 @@
+{% extends 'DRIVER/base.html' %}
+{% block body %}
+<div class="container">
+    <h2 class="mt-4">Feedbacks</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Rating</th>
+                <th>Review</th>
+{#                <th>Customer</th>#}
+                <th>Distance Covered</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rating in data %}
+            <tr>
+                <td>{{ rating.date }}</td>
+                <td>
+                    <div class="star-rating">
+                        {% for i in "12345"|make_list %}
+                            {% if i|add:0 <= rating.rating %}
+                                <span class="star filled">&#9733;</span> <!-- Filled star -->
+                            {% else %}
+                                <span class="star">&#9734;</span> <!-- Empty star -->
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </td>
+                <td>{{ rating.review }}</td>
+{#                <td>{{ rating.TRIP.CUSTOMER.name }}</td>#}
+                <td>{{ rating.TRIP.distance }} KM </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No feedback available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .star-rating {
+        display: inline-block;
+    }
+
+    .star {
+        font-size: 24px; /* Adjust the size as needed */
+        color: #ffd700; /* Gold color for the stars */
+    }
+
+    .star.filled {
+        color: #ffd700; /* Change filled star color */
+    }
+</style>
+{% endblock %}

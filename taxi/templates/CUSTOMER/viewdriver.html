@@ -1,0 +1,245 @@
+
+{% extends 'CUSTOMER/base.html' %}
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Scanner</title>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style>
+        /* Add your CSS here for styling */
+        /* Global Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+  /* background-image: url('/static/CUSTOMER-TAXI/img/about-img.jpg'); Uncomment if you want to use a background image */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+    margin: 0;
+    padding: 20px;
+    color: #fff; /* Default text color */
+}
+
+/* Overlay for background image */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1; /* Place the mask behind the content */
+}
+
+/* Main heading styles */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Search bar styles */
+.search-bar {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    width: 60%;
+    padding: 10px;
+    font-size: 1.2em;
+    border: 2px solid #007bff;
+    border-radius: 25px; /* Rounded corners */
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.search-bar input:focus {
+    border-color: #0056b3;
+}
+
+/* Container for driver details */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center align cards */
+}
+
+/* Card styles */
+.card {
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin: 15px;
+    flex: 0 1 calc(33.333% - 30px);
+    box-sizing: border-box;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative; /* Positioning for potential effects */
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Subheading styles */
+h2 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    color: #d2f705; /* Blue color for headings */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Paragraph styles */
+p {
+    margin: 5px 0;
+    color: #555;
+}
+
+/* Action buttons styles */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.action-buttons a {
+    text-decoration: none;
+    color: white;
+    background-color: #007bff;
+    padding: 10px 20px;
+    border-radius: 30px; /* Rounded buttons */
+    transition: background-color 0.3s, transform 0.3s;
+    margin: 0 5px; /* Space between buttons */
+}
+
+.action-buttons a:hover {
+    background-color: #0056b3;
+    transform: scale(1.05); /* Slight grow on hover */
+}
+
+.action-buttons a.delete {
+    background-color: #dc3545;
+}
+
+.action-buttons a.delete:hover {
+    background-color: #c82333;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .card {
+        flex: 0 1 calc(50% - 30px); /* Two cards per row on tablets */
+    }
+}
+
+@media (max-width: 768px) {
+    .card {
+        flex: 0 1 calc(100% - 30px); /* One card per row on mobile */
+    }
+
+    .search-bar input {
+        width: 80%; /* Wider input on mobile */
+    }
+}
+
+    </style>
+</head>
+<body>
+<center>
+    <h1>Scan Driver's QR Code or Enter Vehicle Number</h1>
+
+    <!-- QR Scanner -->
+    <div id="reader" style="width: 500px;"></div>
+    <div id="result"></div>
+
+    <!-- Manual Vehicle Number Input -->
+    <label for="vehicle-number">Or Enter Vehicle Number:</label>
+    <input type="text" id="vehicle-number" placeholder="Enter Vehicle Number">
+    <button id="fetch-button" class="btn">Fetch Driver Details</button>
+
+    <!-- Driver Details -->
+    <div id="driver-details" style="display: none;">
+        <h1>Driver Details</h1>
+        <h2><strong>Name:</strong> <span id="driver-name"></span></h2>
+        <h2><strong>Email:</strong> <span id="driver-email"></span>    </h2>
+        <h2><strong>Mobile Number:</strong> <span id="driver-mobile"></span>    </h2>
+        <h2><strong>Vehicle Number:</strong> <span id="driver-vehicle"></span>    </h2>
+        <h2><strong>Vehicle Type:</strong> <span id="driver-vehicle-type"></span>    </h2>
+        <h2><strong>Rating</strong> <span id="driver-vehicle-rating"></span>    </h2>
+
+
+    </div>
+
+    <script type="text/javascript">
+        // Function to handle manual entry
+        document.getElementById('fetch-button').addEventListener('click', function() {
+            const vehicleNumber = document.getElementById('vehicle-number').value;
+            if (vehicleNumber) {
+                fetchDriverDetails(vehicleNumber);
+            } else {
+                alert("Please enter a vehicle number.");
+            }
+        });
+
+        function onScanSuccess(qrMessage) {
+            // If QR Code is scanned successfully
+            document.getElementById('result').innerHTML = `<strong>Scanned Vehicle Number:</strong> ${qrMessage}`;
+            fetchDriverDetails(qrMessage);
+        }
+
+        function onScanFailure(error) {
+            console.warn(`QR code scan failed: ${error}`);
+        }
+
+        // Initialize the QR Code Scanner
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+
+        // Function to fetch driver details
+        function fetchDriverDetails(vehicleNumber) {
+            fetch('/fetch_driver_details', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'  // Ensure you add CSRF token here
+                },
+                body: JSON.stringify({ vehicle_number: vehicleNumber })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Populate the driver details
+                    document.getElementById('driver-name').textContent = data.driver.name;
+                    document.getElementById('driver-email').textContent = data.driver.email;
+                    document.getElementById('driver-mobile').textContent = data.driver.mobile_number;
+
+                    document.getElementById('driver-vehicle').textContent = data.driver.vehicle_number;
+                    document.getElementById('driver-vehicle-type').textContent = data.driver.vehicle_type;
+                    document.getElementById('driver-vehicle-rating').textContent = data.driver.ar;
+                    // Show driver details
+                    document.getElementById('driver-details').style.display = 'block';
+                } else {
+                    document.getElementById('result').textContent = 'Error: ' + data.error;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching driver details:', error);
+                document.getElementById('result').textContent = 'An error occurred while fetching driver details.';
+            });
+        }
+    </script>
+</body>
+</html>
+
+{% endblock %}

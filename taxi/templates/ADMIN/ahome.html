@@ -1,0 +1,32 @@
+{% extends 'ADMIN/base.html' %}
+{% block body %}
+<div class="container">
+    <h2>Trip Count per Driver</h2>
+    <canvas id="tripChart" width="400" height="200"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('tripChart').getContext('2d');
+    const tripChart = new Chart(ctx, {
+        type: 'bar', // Bar chart type
+        data: {
+            labels: {{ driver_names|safe }}, // Driver names
+            datasets: [{
+                label: 'Number of Trips',
+                data: {{ trip_counts|safe }}, // Trip counts
+                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Bar color
+                borderColor: 'rgba(75, 192, 192, 1)', // Border color
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

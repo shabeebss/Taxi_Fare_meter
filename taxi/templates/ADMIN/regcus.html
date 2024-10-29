@@ -1,0 +1,82 @@
+{% extends 'ADMIN/base.html' %}
+{% block body %}
+
+<body style="background-color: #f4f7f9; font-family: 'Arial', sans-serif;">
+  <div style="margin: 20px auto; width: 80%; text-align: center;">
+    <h2 style="color: #333;">Customer Information</h2>
+
+    <!-- Search Bar -->
+    <form method="get" action="" style="margin-bottom: 20px;">
+      <input type="text" name="search" placeholder="Search by customer name..." style="padding: 10px; width: 50%; border: 1px solid #ccc; border-radius: 4px; font-size: 16px;">
+      <button type="submit" style="padding: 10px 20px; border: none; background-color: #007bff; color: white; font-size: 16px; cursor: pointer; border-radius: 4px;">Search</button>
+    </form>
+
+    <!-- Customer Table -->
+    <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; background-color: white; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px; overflow: hidden;">
+      <thead style="background-color: #007bff; color: white;">
+        <tr>
+          <th>Si.No</th>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Address</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in data %}
+        <tr style="background-color: {% if forloop.counter0|divisibleby:2 %} #f2f2f2 {% else %} #ffffff {% endif %};">
+          <td>{{ forloop.counter }}</td>
+          <td>{{ i.name }}</td>
+          <td>{{ i.phone }}</td>
+          <td>{{ i.email }}</td>
+          <td>{{ i.place }}, {{ i.post }}, {{ i.pin }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <style>
+    body {
+      background-color: #f4f7f9;
+      font-family: 'Arial', sans-serif;
+      color: #333;
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+    }
+    th, td {
+      padding: 12px;
+      text-align: center;
+      font-size: 16px;
+    }
+    th {
+      background-color: #007bff;
+      color: white;
+      text-transform: uppercase;
+    }
+    tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tbody tr:hover {
+      background-color: #e6f7ff;
+      transition: background-color 0.3s ease;
+    }
+    .search-bar {
+      margin-bottom: 20px;
+    }
+    button {
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</body>
+{% endblock %}
